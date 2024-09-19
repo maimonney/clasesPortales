@@ -52,35 +52,41 @@ y opcionalmente reemplazando "/" por ".".
 
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, "home"])
--> name('home');
+    ->name('home');
 
 Route::get('/acerca-de', [\App\Http\Controllers\HomeController::class, "about"])
--> name('about');
+    ->name('about');
 
 Route::get('/contacto', [\App\Http\Controllers\HomeController::class, "contact"])
--> name('contact');
+    ->name('contact');
 
-Route::get ('peliculas/listado', [\App\Http\Controllers\MovieController::class, "index"])
--> name('movies.index');
+Route::get('peliculas/listado', [App\Http\Controllers\MoviesController::class, "index"])
+    ->name('movies.index');
+
+Route::get('peliculas/{id}', [App\Http\Controllers\MoviesController::class, "view"])
+    ->name('movies.view')
+    ->whereNumber('id');
+
+Route::get('peliculas/publicar', [App\Http\Controllers\MoviesController::class, "creatForm"])
+    ->name('movies.create.form');
+
+Route::get('peliculas/{id}/editar', [App\Http\Controllers\MoviesController::class, "editForm"])
+    ->name('movies.edit.form')
+    ->whereNumber('id');
+
+Route::post('peliculas/{id}/editar', [App\Http\Controllers\MoviesController::class, "editProcess"])
+    ->name('movies.edit.process')
+    ->whereNumber('id');
+
+Route::post('peliculas/{id}/eliminar', [App\Http\Controllers\MoviesController::class, "deleteProcess"])
+    ->name('movies.delete.process')
+    ->whereNumber('id');
+
+Route::post('peliculas/publicar', [App\Http\Controllers\MoviesController::class, "creatProcess"])
+    ->name('movies.create.process');
 
 
-Route::get ('peliculas/{id}', [\App\Http\Controllers\MovieController::class, "view"])
--> name('movies.view')
--> whereNumber('id');
-
-Route::get ('peliculas/publicar', [\App\Http\Controllers\MovieController::class, "createForm"])
--> name('movies.create.form');
 
 
-Route::post ('peliculas/publicar', [\App\Http\Controllers\MovieController::class, "createProcess"])
--> name('movies.create.process');
 
 
-Route::get ('peliculas/{id}/editar', [\App\Http\Controllers\MovieController::class, "editProcess"])
--> name('movies.edit.form')
--> whereNumber('id');
-
-
-Route::get ('peliculas/{id}/editar', [\App\Http\Controllers\MovieController::class, "editProcess"])
--> name('movies.edit.process')
--> whereNumber('id');
