@@ -60,33 +60,27 @@ Route::get('/acerca-de', [\App\Http\Controllers\HomeController::class, "about"])
 Route::get('/contacto', [\App\Http\Controllers\HomeController::class, "contact"])
     ->name('contact');
 
-Route::get('peliculas/listado', [App\Http\Controllers\MoviesController::class, "index"])
+Route::get('peliculas/listado', [App\Http\Controllers\MovieController::class, "index"])
     ->name('movies.index');
 
-Route::get('peliculas/{id}', [App\Http\Controllers\MoviesController::class, "view"])
+Route::get('peliculas/{id}', [App\Http\Controllers\MovieController::class, "view"])
     ->name('movies.view')
     ->whereNumber('id');
 
-Route::get('peliculas/publicar', [App\Http\Controllers\MoviesController::class, "creatForm"])
+Route::get('peliculas/publicar', [App\Http\Controllers\MovieController::class, "creatForm"])
     ->name('movies.create.form');
 
-Route::get('peliculas/{id}/editar', [App\Http\Controllers\MoviesController::class, "editForm"])
+Route::get('peliculas/{id}/editar', [App\Http\Controllers\MovieController::class, "editForm"])
     ->name('movies.edit.form')
     ->whereNumber('id');
 
-Route::post('peliculas/{id}/editar', [App\Http\Controllers\MoviesController::class, "editProcess"])
+Route::post('peliculas/{id}/editar', [App\Http\Controllers\MovieController::class, "editProcess"])
     ->name('movies.edit.process')
     ->whereNumber('id');
 
-Route::post('peliculas/{id}/eliminar', [App\Http\Controllers\MoviesController::class, "deleteProcess"])
+Route::post('peliculas/{id}/eliminar', [App\Http\Controllers\MovieController::class, "deleteProcess"])
     ->name('movies.delete.process')
     ->whereNumber('id');
 
-Route::post('peliculas/publicar', [App\Http\Controllers\MoviesController::class, "creatProcess"])
+Route::post('peliculas/publicar', [App\Http\Controllers\MovieController::class, "creatProcess"])
     ->name('movies.create.process');
-
-
-
-
-
-

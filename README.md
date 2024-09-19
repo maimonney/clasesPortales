@@ -31,3 +31,8 @@ Siempre hay que hacerlo antes de cargar la base de datos
  ```
 Para cargar la base de datos que ya tengo 
  ```
+
+# php artisan serve
+```
+Es para que te de link
+```

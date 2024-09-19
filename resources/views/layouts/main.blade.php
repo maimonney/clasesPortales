@@ -9,22 +9,23 @@
 </head>
 
 <body>
-    @if (session()->has('feedback.message'))
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="alert alert-success">
-                        {{-- por proteccion de la interpolacion se usan los "!" --}}
-                        {!! session()->get('feedback.message') !!}
-                    </div>
+    @if(session()->has('feedback.message'))
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-success">
+                    {!! session()->get('feedback.message') !!}
                 </div>
             </div>
         </div>
+    </div>
     @endif
+
     @yield('content')
 
 
-    <script src="{{ url('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url('js/bootstrap.bundle.min.js') }}">
+    </script>
 </body>
 
 </html>

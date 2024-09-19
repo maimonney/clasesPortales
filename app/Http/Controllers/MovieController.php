@@ -9,20 +9,25 @@ class MovieController extends Controller
 {
     public function index()
     {
-        $allmovies = Movie::all();
+        $allMovies = Movie::all();
+
         return view('movies.index', [
-            'movies' => $allmovies
-        ]
-        );
+            'movies' => $allMovies
+        ]);
     }
-    public function view(int $id){
+
+    public function view(int $id)
+    {
         $movie = Movie::find($id);
 
         return view('movies.view',[
-        'movie'=>$movie
+            'movie'=>$movie,
         ]);
+
     }
-    public function createForm () {
+
+    public function creatForm()
+    {
         return view('movies.create-form');
     }
 
@@ -41,23 +46,53 @@ class MovieController extends Controller
             'synopsis.required' => 'La sinopsis debe tener un valor'
         ]);
 
-    
         $input = $request->only(['title', 'price', 'release_date', 'synopsis']);
 
         Movie::create($input);
 
-        // la funcion "e" previene los ataques de inyeccion de html
         return redirect()
             ->route('movies.index')
-            ->with('feedback.message', 'La película <b> "'.e($input['title']). '"</b>se publicó con exito');
-} 
-public function editform(int $id){
-   return view('movies.edit-form' , [
-    'movie' => Movie::findOrfail($id)
-   ]);
-}
+            ->with('feedback.message', 'La película <b> "'.e($input['title']). '"</b>sepublicó con exito.');
+    }
 
-public function editProcess(int  $id, Request $request){
-    dd($request->all());
-}
+    public function editForm(int $id){
+        return view('movies.edit-form', [
+            'movie' => Movie::findOrFail($id)
+        ]);
+    }
+
+    public function editProcess(int $id, Request $request){
+        $request->validate([
+            'title' => 'required|min:3|max:255',
+            'price' => 'required|numeric',
+            'release_date' => 'required',
+            'synopsis' => 'required|min:3|max:255'
+        ], [
+            'title.required' => 'El titulo debe tener un valor',
+            'price.required' => 'El precio debe tener un valor',
+            'release_date.required' => 'La fecha de estreno debe tener un valor',
+            'synopsis.required' => 'La sinopsis debe tener un valor'
+        ]);
+
+        $input = $request->only(['title', 'price', 'release_date', 'synopsis']);
+
+        $movie = Movie::findOrFail($id);
+
+        $movie->update($input);
+
+        return redirect()
+            ->route('movies.index')
+            ->with('feedback.message', 'La película <b> "'.e($input['title']). '"</b>se editó con exito.');
+    }
+
+    public function deleteProcess(int $id)
+    {
+        $movie = Movie::findOrFail($id);
+
+        $movie->delete();
+
+        return redirect()
+            ->route('movies.index')
+            ->with('feedback.message', 'La película <b> "'.e($movie->title). '"</b>se borró con exito.');
+    }
 }
